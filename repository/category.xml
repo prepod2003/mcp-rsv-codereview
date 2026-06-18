@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="com.radzivillovich.edt.rsv.codereview.feature" version="0.0.0">
+      <category name="mcp-rsv-codereview"/>
+   </feature>
+
+   <category-def name="mcp-rsv-codereview" label="MCP:RSV Code Review">
+      <description>
+         Бесплатное код-ревью BSL в 1C:EDT на базе BSL Language Server (1c-syntax, LGPL-3.0).
+         Бренд MCP:RSV. Сайт: https://prepod2003.github.io/edt-ai-1c/
+      </description>
+   </category-def>
+</site>

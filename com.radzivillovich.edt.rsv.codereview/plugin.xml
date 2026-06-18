@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <!-- Команда запуска код-ревью -->
+   <extension point="org.eclipse.ui.commands">
+      <command
+            id="com.radzivillovich.edt.rsv.codereview.commands.run"
+            name="Проверить код"
+            categoryId="org.eclipse.ui.category.edit"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.handlers">
+      <handler
+            commandId="com.radzivillovich.edt.rsv.codereview.commands.run"
+            class="com.radzivillovich.edt.rsv.codereview.handlers.RunCodeReviewHandler"/>
+   </extension>
+
+   <!-- Меню: контекстное меню текстового редактора -->
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution allPopups="false" locationURI="popup:#AbstractTextEditorContext?endof=group.open">
+         <menu id="com.radzivillovich.edt.rsv.codereview.menu.editor" label="MCP:RSV">
+            <command commandId="com.radzivillovich.edt.rsv.codereview.commands.run" style="push"/>
+         </menu>
+      </menuContribution>
+      <!-- Меню: навигатор EDT (модуль / объект / проект) -->
+      <menuContribution allPopups="false" locationURI="popup:com._1c.g5.v8.dt.navigator.ui.navigator.popup?after=group.open">
+         <menu id="com.radzivillovich.edt.rsv.codereview.menu.nav" label="MCP:RSV">
+            <command commandId="com.radzivillovich.edt.rsv.codereview.commands.run" style="push">
+               <visibleWhen checkEnabled="false">
+                  <with variable="selection">
+                     <iterate ifEmpty="false">
+                        <adapt type="org.eclipse.core.resources.IResource"/>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+   <!-- Брендированная панель результатов -->
+   <extension point="org.eclipse.ui.views">
+      <category
+            id="com.radzivillovich.edt.rsv.codereview.category"
+            name="MCP:RSV"/>
+      <view
+            id="com.radzivillovich.edt.rsv.codereview.views.CodeReviewView"
+            name="MCP:RSV Code Review"
+            category="com.radzivillovich.edt.rsv.codereview.category"
+            class="com.radzivillovich.edt.rsv.codereview.ui.CodeReviewView"
+            restorable="true"/>
+   </extension>
+
+   <!-- Тип маркера для результатов код-ревью (полный id = com.radzivillovich.edt.rsv.codereview.problem) -->
+   <extension point="org.eclipse.core.resources.markers" id="problem" name="MCP:RSV Code Review">
+      <super type="org.eclipse.core.resources.problemmarker"/>
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <persistent value="true"/>
+   </extension>
+
+   <!-- Страница настроек: Параметры → MCP:RSV → Код-ревью -->
+   <extension point="org.eclipse.ui.preferencePages">
+      <page
+            id="com.radzivillovich.edt.rsv.codereview.preferences.CodeReview"
+            name="Код-ревью"
+            category="com.radzivillovich.edt.rsv.preferences.ToolGroups"
+            class="com.radzivillovich.edt.rsv.codereview.prefs.CodeReviewPreferencePage"/>
+   </extension>
+
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer class="com.radzivillovich.edt.rsv.codereview.prefs.PreferenceInitializer"/>
+   </extension>
+
+   <!-- Размещает страницу «Код-ревью» под группой «MCP:RSV», если основной плагин не установлен -->
+   <extension point="org.eclipse.ui.startup">
+      <startup class="com.radzivillovich.edt.rsv.codereview.PreferenceGroupStartup"/>
+   </extension>
+
+</plugin>

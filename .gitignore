@@ -1,0 +1,8 @@
+# Сборка
+target/
+bin/
+*.class
+
+# Движок BSL Language Server не храним в git (115 МБ, LGPL-компонент).
+# Кладётся в ресурсы перед сборкой; в дистрибутив попадает из неё.
+com.radzivillovich.edt.rsv.codereview/resources/bsl-language-server/*.jar

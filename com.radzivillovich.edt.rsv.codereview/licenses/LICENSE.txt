@@ -1,0 +1,18 @@
+MCP:RSV Code Review — автоматическое код-ревью BSL для 1C:EDT.
+Copyright (C) 2026 Radzivillovich Sergey
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. Full text: GPL-3.0.txt.
+
+---
+
+ПРИМЕЧАНИЕ: встроенный движок BSL Language Server (1c-syntax) — отдельный
+компонент под GNU LGPL-3.0-or-later, GPL-3.0 на него не распространяется.
+См. THIRD-PARTY.md (атрибуция, версия, ссылки) и LGPL-3.0.txt.

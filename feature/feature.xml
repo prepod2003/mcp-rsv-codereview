@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.radzivillovich.edt.rsv.codereview.feature"
+      label="MCP:RSV Code Review"
+      version="1.3.0.qualifier"
+      provider-name="Radzivillovich Sergey">
+
+   <description>
+      Бесплатное автоматическое код-ревью BSL в 1C:EDT (стандарты разработки 1С,
+      сложность, code smells). На базе open-source BSL Language Server (1c-syntax, LGPL-3.0).
+      Бренд MCP:RSV. Сайт: https://prepod2003.github.io/edt-ai-1c/
+   </description>
+
+   <copyright>
+      Copyright (c) 2026 Radzivillovich Sergey.
+      На базе BSL Language Server (c) 2018-present Alexey Sosnoviy, Nikita Fedkin and contributors (LGPL-3.0-or-later).
+   </copyright>
+
+   <license url="https://www.gnu.org/licenses/lgpl-3.0.txt">
+      Компонент MCP:RSV Code Review распространяется бесплатно.
+      Встроенный движок BSL Language Server лицензирован под GNU LGPL-3.0-or-later.
+      Исходники движка: https://github.com/1c-syntax/bsl-language-server
+   </license>
+
+   <plugin
+         id="com.radzivillovich.edt.rsv.codereview"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="true"/>
+
+</feature>
