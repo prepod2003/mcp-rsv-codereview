@@ -17,8 +17,9 @@ import org.eclipse.jface.preference.IPreferenceStore;
 public final class CodeReviewConfig {
 
     /**
-     * Эффективный конфиг движка в виде JSON-строки: язык + список выключенных диагностик
-     * (включённые не упоминаются — движок применяет к ним свои значения по умолчанию).
+     * Эффективный конфиг движка в виде JSON-строки: язык + опция «поддержка обычного
+     * приложения» + список выключенных диагностик (включённые не упоминаются — движок
+     * применяет к ним свои значения по умолчанию).
      */
     public static String effectiveConfigJson() {
         IPreferenceStore store = Activator.getDefault().getPreferenceStore();
@@ -31,7 +32,10 @@ public final class CodeReviewConfig {
                 disabled.append('"').append(entry.code).append("\":false");
             }
         }
-        return "{\"language\":\"ru\",\"diagnostics\":{\"parameters\":{" + disabled + "}}}";
+        boolean ordinaryAppSupport = store.getBoolean(Diagnostics.PREF_ORDINARY_APP_SUPPORT);
+        return "{\"language\":\"ru\",\"diagnostics\":{"
+            + "\"ordinaryAppSupport\":" + ordinaryAppSupport + ","
+            + "\"parameters\":{" + disabled + "}}}";
     }
 
     private CodeReviewConfig() {

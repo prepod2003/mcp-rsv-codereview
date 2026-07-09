@@ -49,12 +49,25 @@ public final class CodeReviewPreferencePage extends PreferencePage implements IW
         credit.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         credit.addListener(SWT.Selection, e -> Program.launch(e.text));
 
+        IPreferenceStore store = getPreferenceStore();
+
+        Group engineGroup = new Group(root, SWT.NONE);
+        engineGroup.setText("Конфигурация");
+        engineGroup.setLayout(new GridLayout(1, false));
+        engineGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+        Button ordinaryApp = new Button(engineGroup, SWT.CHECK);
+        ordinaryApp.setText("Конфигурация поддерживает обычное приложение (толстый клиент)");
+        ordinaryApp.setToolTipText("Влияет на проверки флагов общих модулей: при поддержке обычного "
+            + "приложения серверные общие модули должны иметь флаг «Клиент (обычное приложение)». "
+            + "Для современных конфигураций (только управляемое приложение) оставьте выключенным.");
+        ordinaryApp.setSelection(store.getBoolean(Diagnostics.PREF_ORDINARY_APP_SUPPORT));
+        checks.put(Diagnostics.PREF_ORDINARY_APP_SUPPORT, ordinaryApp);
+
         Group group = new Group(root, SWT.NONE);
         group.setText("Диагностики");
         group.setLayout(new GridLayout(1, false));
         group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-        IPreferenceStore store = getPreferenceStore();
         for (Diagnostics.Entry entry : Diagnostics.ALL) {
             Button checkbox = new Button(group, SWT.CHECK);
             checkbox.setText(entry.title + "  (" + entry.code + ")");
@@ -68,11 +81,8 @@ public final class CodeReviewPreferencePage extends PreferencePage implements IW
     @Override
     protected void performDefaults() {
         IPreferenceStore store = getPreferenceStore();
-        for (Diagnostics.Entry entry : Diagnostics.ALL) {
-            Button checkbox = checks.get(entry.prefKey());
-            if (checkbox != null) {
-                checkbox.setSelection(store.getDefaultBoolean(entry.prefKey()));
-            }
+        for (Map.Entry<String, Button> entry : checks.entrySet()) {
+            entry.getValue().setSelection(store.getDefaultBoolean(entry.getKey()));
         }
         super.performDefaults();
     }

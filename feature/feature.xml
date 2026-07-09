@@ -2,7 +2,7 @@
 <feature
       id="com.radzivillovich.edt.rsv.codereview.feature"
       label="MCP:RSV Code Review"
-      version="1.3.0.qualifier"
+      version="1.3.1.qualifier"
       provider-name="Radzivillovich Sergey">
 
    <description>

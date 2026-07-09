@@ -17,5 +17,6 @@ public final class PreferenceInitializer extends AbstractPreferenceInitializer {
         for (Diagnostics.Entry entry : Diagnostics.ALL) {
             store.setDefault(entry.prefKey(), entry.defaultEnabled);
         }
+        store.setDefault(Diagnostics.PREF_ORDINARY_APP_SUPPORT, false);
     }
 }
