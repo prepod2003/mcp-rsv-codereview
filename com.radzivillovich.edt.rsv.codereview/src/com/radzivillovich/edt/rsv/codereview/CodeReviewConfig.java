@@ -24,19 +24,39 @@ public final class CodeReviewConfig {
     public static String effectiveConfigJson() {
         IPreferenceStore store = Activator.getDefault().getPreferenceStore();
         StringBuilder disabled = new StringBuilder();
+        java.util.Set<String> off = new java.util.HashSet<>();
         for (Diagnostics.Entry entry : Diagnostics.ALL) {
             if (!store.getBoolean(entry.prefKey())) {
+                off.add(entry.code);
                 if (disabled.length() > 0) {
                     disabled.append(',');
                 }
                 disabled.append('"').append(entry.code).append("\":false");
             }
         }
+        // Удаление временного файла засчитывается и асинхронными методами платформы
+        // (Ждать УдалитьФайлыАсинх / ПереместитьФайлАсинх) — в умолчании движка их нет,
+        // и корректный асинхронный код получал «ошибку».
+        if (!off.contains(TEMP_FILE_RULE)) {
+            if (disabled.length() > 0) {
+                disabled.append(',');
+            }
+            disabled.append('"').append(TEMP_FILE_RULE).append("\":{\"searchDeleteFileMethod\":\"")
+                .append(TEMP_FILE_DELETE_METHODS).append("\"}");
+        }
         boolean ordinaryAppSupport = store.getBoolean(Diagnostics.PREF_ORDINARY_APP_SUPPORT);
         return "{\"language\":\"ru\",\"diagnostics\":{"
             + "\"ordinaryAppSupport\":" + ordinaryAppSupport + ","
             + "\"parameters\":{" + disabled + "}}}";
     }
+
+    /** Правило «временный файл не удалён». */
+    static final String TEMP_FILE_RULE = "MissingTemporaryFileDeletion";
+
+    /** Методы удаления/перемещения файла: умолчание движка + асинхронные варианты платформы. */
+    static final String TEMP_FILE_DELETE_METHODS =
+        "УдалитьФайлы|DeleteFiles|НачатьУдалениеФайлов|BeginDeletingFiles|ПереместитьФайл|MoveFile"
+        + "|УдалитьФайлыАсинх|DeleteFilesAsync|ПереместитьФайлАсинх|MoveFileAsync";
 
     private CodeReviewConfig() {
     }
